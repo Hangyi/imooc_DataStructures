@@ -53,12 +53,12 @@ public class Array<E> {
     // 在第index个位置插入一个新元素e
     public void add(int index, E e) {
 
-        if (size == data.length) {
-            throw new IllegalArgumentException("AddLast failed. Array is full.");
-        }
-
         if (index < 0 || index > size) {
             throw new IllegalArgumentException("Add failed. Require index >= 0 and index <= size.");
+        }
+
+        if (size == data.length) {
+            resize(2 * data.length);
         }
 
         for (int i = size - 1; i >= index; i--) {
@@ -119,6 +119,10 @@ public class Array<E> {
         }
 
         size--;
+
+        if (size == data.length / 2) {
+            resize(data.length / 2);
+        }
         return ret;
     }
 
@@ -135,7 +139,7 @@ public class Array<E> {
     // 从数组中删除第一次出现的元素e
     public void removeElement(E e) {
         int index = find(e);
-        if(index != -1){
+        if (index != -1) {
             remove(index);
         }
     }
@@ -155,6 +159,17 @@ public class Array<E> {
 
         res.append("]");
         return res.toString(); //将StringBuilder转换为String
+
+    }
+
+    private void resize(int newCapacity) {
+        E[] newData = (E[]) new Object[newCapacity];
+
+        for (int i = 0; i < size; i++) {
+            newData[i] = data[i];
+        }
+
+        data = newData; //将data指向新数组
 
     }
 
