@@ -120,7 +120,7 @@ public class Array<E> {
 
         size--;
 
-        if (size == data.length / 2) {
+        if (size == data.length / 4 && data.length /2 != 0) { // 复杂度震荡 lazy 并且 new一个数组不能new一个长度为0的数组
             resize(data.length / 2);
         }
         return ret;
