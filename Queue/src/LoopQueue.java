@@ -36,7 +36,7 @@ public class LoopQueue<E> implements Queue<E> {
 
     @Override
     public boolean isEmpty() {
-        return front == tail;
+        return front == tail; //循环队列判空的标准
     }
 
     @Override
@@ -49,12 +49,13 @@ public class LoopQueue<E> implements Queue<E> {
 
     @Override
     public void enqueue(E e) {
+        // 判断循环队列是否已满, 若满, 则扩容
         if ((tail + 1) % data.length == front) {
             resize(2 * getCapacity());
         }
 
         data[tail] = e;
-        tail = (tail + 1) % data.length;
+        tail = (tail + 1) % data.length; // 要记得维护tail, size
         size++;
     }
 
